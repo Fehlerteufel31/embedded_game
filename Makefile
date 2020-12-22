@@ -1,6 +1,7 @@
 CROSSTOOL_HOME := /media/ubuntu/9bee6cb9-766f-425f-bf5b-2e5fd011415c/buildroot_qt_sdl_ubi/buildroot/output/host/arm-buildroot-linux-gnueabihf
 SYSROOT := $(CROSSTOOL_HOME)/sysroot
 SDL_FLAGS := `$(SYSROOT)/usr/bin/sdl2-config --cflags`
+SDL_IMAGE_LIB := -L$(SYSROOT)/usr/lib -lSDL2_image
 CXX := /media/ubuntu/9bee6cb9-766f-425f-bf5b-2e5fd011415c/buildroot_qt_sdl_ubi/buildroot/output/host/bin/arm-buildroot-linux-gnueabihf-g++
 CXX_FLAGS := -Wall -Wextra -std=c++17 -ggdb3 $(SDL_FLAGS)
 BIN	:= bin
@@ -14,7 +15,7 @@ EXECUTABLE := gs-cross-compile
 all: $(BIN)/$(EXECUTABLE)
 
 $(BIN)/$(EXECUTABLE): $(SRC)/*.cpp
-	$(CXX) $(CXX_FLAGS) -I$(INCLUDE) -L$(LIB) $^ -o $@ $(LIBRARIES)
+	$(CXX) $(CXX_FLAGS) -I$(INCLUDE) -L$(LIB) $^ -o $@ $(LIBRARIES) $(SDL_IMAGE_LIB)
 
 clean:
 	rm -rf $(BIN)/*
